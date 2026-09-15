@@ -200,7 +200,7 @@ https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6
 ## 3. 공유링크복사
 https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6eyJ4IjoiMSIsInkiOiIxIiwieiI6IjEifSwib2JqZWN0cyI6W3siaWQiOiJlYXJ0aCIsIm5hbWUiOiLsp4DqtawiLCJjb2xvciI6WzAuMzUsMC42LDAuOTVdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMzYwIl19LHsidHlwZSI6IlMiLCJhcmdzIjpbIjYzNzEiLCI2MzcxIiwiNjM3MSJdfV19LHsiaWQiOiJtb29uIiwibmFtZSI6IuuLrCIsImNvbG9yIjpbMC43OCwwLjc4LDAuODJdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMTMuMiJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyIzODQ0MDAiLCIwIiwiMCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyIxNzM3IiwiMTczNyIsIjE3MzciXX1dfSx7ImlkIjoic2F0IiwibmFtZSI6IuyduOqzteychOyEsSIsImNvbG9yIjpbMC45NSwwLjcyLDAuMzVdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUngiLCJhcmdzIjpbIjUzLjE2Il19LHsidHlwZSI6IlJ6IiwiYXJncyI6WyJ0KjEwMCJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyI2ODQwLjg1IiwiMCIsIjAiXX0seyJ0eXBlIjoiUyIsImFyZ3MiOlsiMC4wMyIsIjAuMDMiLCIwLjAzIl19XX1dfQ%3D%3D 
 
-설정 JSON:
+## 4. 설정 JSON:
 ```json
 {
   "range": {
@@ -330,5 +330,5 @@ https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6
 
 - 실행 페이지: [Task 2 실행하기](task2.html)
 
-### 6. 결과 화면 캡처
+### 5. 결과 화면 캡처
 ![Task 2 - NDC 범위에 맞춘 장면](images/task2.png)
