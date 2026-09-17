@@ -58,7 +58,8 @@ satellitemap.space에서 실시간 TLE 궤도 데이터와 제원을 확인하�
 - 크기 S (0.03, 0.03, 0.03): 위성 전개 크기인 30 m를 km 단위로 바꾼 0.03으로 지정했습니다.
 
 ## 4. 공유링크복사
-https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6eyJ4IjoiNDIwMDAwIiwieSI6IjQyMDAwMCIsInoiOiI0MjAwMDAifSwib2JqZWN0cyI6W3siaWQiOiJlYXJ0aCIsIm5hbWUiOiLsp4DqtawiLCJjb2xvciI6WzAuMzUsMC42LDAuOTVdLCJzdGVwcyI6W3sidHlwZSI6IlJ6IiwiYXJncyI6WyJ0KjM2MCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyI2MzcxIiwiNjM3MSIsIjYzNzEiXX1dfSx7ImlkIjoibW9vbiIsIm5hbWUiOiLri6wiLCJjb2xvciI6WzAuNzgsMC43OCwwLjgyXSwic3RlcHMiOlt7InR5cGUiOiJSeiIsImFyZ3MiOlsidCoxMy4yIl19LHsidHlwZSI6IlQiLCJhcmdzIjpbIjM4NDQwMCIsIjAiLCIwIl19LHsidHlwZSI6IlMiLCJhcmdzIjpbIjE3MzciLCIxNzM3IiwiMTczNyJdfV19LHsiaWQiOiJzYXQiLCJuYW1lIjoi7J246rO17JyE7ISxIiwiY29sb3IiOlswLjk1LDAuNzIsMC4zNV0sInN0ZXBzIjpbeyJ0eXBlIjoiUngiLCJhcmdzIjpbIjUzLjE2Il19LHsidHlwZSI6IlJ6IiwiYXJncyI6WyJ0KjEwMCJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyI2ODQwLjg1IiwiMCIsIjAiXX0seyJ0eXBlIjoiUyIsImFyZ3MiOlsiMC4wMyIsIjAuMDMiLCIwLjAzIl19XX1dfQ%3D%3D 
+https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6eyJ4IjoiNDIwMDAwIiwieSI6IjQyMDAwMCIsInoiOiI0MjAwMDAifSwib2JqZWN0cyI6W3siaWQiOiJlYXJ0aCIsIm5hbWUiOiLsp4DqtawiLCJjb2xvciI6WzAuMzUsMC42LDAuOTVdLCJzdGVwcyI6W3sidHlwZSI6IlJ6IiwiYXJncyI6WyJ0KjM2MCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyI2MzcxIiwiNjM3MSIsIjYzNzEiXX1dfSx7ImlkIjoibW9vbiIsIm5hbWUiOiLri6wiLCJjb2xvciI6WzAuNzgsMC43OCwwLjgyXSwic3RlcHMiOlt7InR5cGUiOiJSeiIsImFyZ3MiOlsidCoxMy4yIl19LHsidHlwZSI6IlQiLCJhcmdzIjpbIjM4NDQwMCIsIjAiLCIwIl19LHsidHlwZSI6IlJ6IiwiYXJncyI6WyIxODAiXX0seyJ0eXBlIjoiUyIsImFyZ3MiOlsiMTczNyIsIjE3MzciLCIxNzM3Il19XX0seyJpZCI6InNhdCIsIm5hbWUiOiLsnbjqs7XsnITshLEiLCJjb2xvciI6WzAuOTUsMC43MiwwLjM1XSwic3RlcHMiOlt7InR5cGUiOiJSeCIsImFyZ3MiOlsiNTMuMTYiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMTAwIl19LHsidHlwZSI6IlQiLCJhcmdzIjpbIjY4NDAuODUiLCIwIiwiMCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyIwLjAzIiwiMC4wMyIsIjAuMDMiXX1dfV19 
+
 ## 5. 설정JSON복사:
 ```json
 {
@@ -114,6 +115,12 @@ https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6
             "384400",
             "0",
             "0"
+          ]
+        },
+        {
+          "type": "Rz",
+          "args": [
+            "180"
           ]
         },
         {
@@ -198,7 +205,7 @@ https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6
 - 지구, 달, 인공위성 세 물체의 행렬 사슬 가장 앞(맨 왼쪽)에 공통으로 크기 S (0.0000025, 0.0000025, 0.0000025) 행렬을 추가했습니다. 기배치된 천체들의 상대적 위치와 크기를 보존하면서 장면 전체를 NDC 범위에 맞추기 위한 전역 스케일 변환입니다.
 
 ## 3. 공유링크복사
-https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6eyJ4IjoiMSIsInkiOiIxIiwieiI6IjEifSwib2JqZWN0cyI6W3siaWQiOiJlYXJ0aCIsIm5hbWUiOiLsp4DqtawiLCJjb2xvciI6WzAuMzUsMC42LDAuOTVdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMzYwIl19LHsidHlwZSI6IlMiLCJhcmdzIjpbIjYzNzEiLCI2MzcxIiwiNjM3MSJdfV19LHsiaWQiOiJtb29uIiwibmFtZSI6IuuLrCIsImNvbG9yIjpbMC43OCwwLjc4LDAuODJdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMTMuMiJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyIzODQ0MDAiLCIwIiwiMCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyIxNzM3IiwiMTczNyIsIjE3MzciXX1dfSx7ImlkIjoic2F0IiwibmFtZSI6IuyduOqzteychOyEsSIsImNvbG9yIjpbMC45NSwwLjcyLDAuMzVdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUngiLCJhcmdzIjpbIjUzLjE2Il19LHsidHlwZSI6IlJ6IiwiYXJncyI6WyJ0KjEwMCJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyI2ODQwLjg1IiwiMCIsIjAiXX0seyJ0eXBlIjoiUyIsImFyZ3MiOlsiMC4wMyIsIjAuMDMiLCIwLjAzIl19XX1dfQ%3D%3D 
+https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6eyJ4IjoiMSIsInkiOiIxIiwieiI6IjEifSwib2JqZWN0cyI6W3siaWQiOiJlYXJ0aCIsIm5hbWUiOiLsp4DqtawiLCJjb2xvciI6WzAuMzUsMC42LDAuOTVdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMzYwIl19LHsidHlwZSI6IlMiLCJhcmdzIjpbIjYzNzEiLCI2MzcxIiwiNjM3MSJdfV19LHsiaWQiOiJtb29uIiwibmFtZSI6IuuLrCIsImNvbG9yIjpbMC43OCwwLjc4LDAuODJdLCJzdGVwcyI6W3sidHlwZSI6IlN1IiwiYXJncyI6WyIwLjAwMDAwMjUiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMTMuMiJdfSx7InR5cGUiOiJUIiwiYXJncyI6WyIzODQ0MDAiLCIwIiwiMCJdfSx7InR5cGUiOiJSeiIsImFyZ3MiOlsiMTgwIl19LHsidHlwZSI6IlMiLCJhcmdzIjpbIjE3MzciLCIxNzM3IiwiMTczNyJdfV19LHsiaWQiOiJzYXQiLCJuYW1lIjoi7J246rO17JyE7ISxIiwiY29sb3IiOlswLjk1LDAuNzIsMC4zNV0sInN0ZXBzIjpbeyJ0eXBlIjoiU3UiLCJhcmdzIjpbIjAuMDAwMDAyNSJdfSx7InR5cGUiOiJSeCIsImFyZ3MiOlsiNTMuMTYiXX0seyJ0eXBlIjoiUnoiLCJhcmdzIjpbInQqMTAwIl19LHsidHlwZSI6IlQiLCJhcmdzIjpbIjY4NDAuODUiLCIwIiwiMCJdfSx7InR5cGUiOiJTIiwiYXJncyI6WyIwLjAzIiwiMC4wMyIsIjAuMDMiXX1dfV19 
 
 ## 4. 설정 JSON:
 ```json
@@ -267,6 +274,12 @@ https://cg.catholic.ac.kr/~mgchoi/CG/demos/d02-transform-lab.html?d=eyJyYW5nZSI6
             "384400",
             "0",
             "0"
+          ]
+        },
+        {
+          "type": "Rz",
+          "args": [
+            "180"
           ]
         },
         {
