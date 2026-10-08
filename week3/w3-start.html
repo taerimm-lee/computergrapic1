@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3주차 실습 1 — 출발점</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0f16; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="glcanvas"></canvas>
+
+<script>
+/* ============================================================================
+   3주차 실습 1 — 출발점 파일
+
+   삼각형 하나를 그리는 가장 작은 WebGL2 프로그램입니다.
+   이 파일 하나에 세 개의 프로그램이 모두 들어 있습니다.
+
+     ① 메인 애플리케이션 — 이 <script> 안의 JavaScript (CPU 에서 실행)
+     ② 버텍스 셰이더    — 아래 VS_SOURCE 문자열     (GPU 에서 실행)
+     ③ 프래그먼트 셰이더 — 아래 FS_SOURCE 문자열     (GPU 에서 실행)
+
+   강의 자료의 「실습 1」 을 보며 단계별로 고쳐 나가면 됩니다.
+   ============================================================================ */
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════════════════
+   1. 메시 데이터 — 이 숫자들이 전부입니다
+   ──────────────────────────────────────────────────────────────────────────
+   각 버퍼의 "같은 번째" 값이 같은 정점의 정보입니다.
+   예를 들어 정점 0 은 위치 (-0.75,-0.55,0), 법선 (0,0,1), 색 (0.92,0.35,0.32).
+   ══════════════════════════════════════════════════════════════════════════ */
+const positions = new Float32Array([
+  -0.75, -0.55, 0.0,      // 정점 0
+   0.75, -0.55, 0.0,      // 정점 1
+   0.00,  0.80, 0.0,      // 정점 2
+]);
+
+const normals = new Float32Array([
+  0, 0, 1,                // 정점 0 — 화면 정면을 향한다
+  0, 0, 1,                // 정점 1
+  0, 0, 1,                // 정점 2
+]);
+
+const colors = new Float32Array([
+  0.92, 0.35, 0.32,       // 정점 0 — 빨강
+  0.30, 0.60, 0.95,       // 정점 1 — 파랑
+  0.35, 0.78, 0.50,       // 정점 2 — 초록
+]);
+
+const indices = new Uint16Array([0, 1, 2]);   // 정수 세 개가 삼각형 하나
+
+/* ══════════════════════════════════════════════════════════════════════════
+   2. 버텍스 셰이더 — 정점 하나마다 한 번씩 실행됩니다
+   ══════════════════════════════════════════════════════════════════════════ */
+const VS_SOURCE = `#version 300 es
+
+layout(location=0) in vec3 aPos;      // 정점 위치 버퍼에서 들어온다
+layout(location=1) in vec3 aNormal;   // 법선 버퍼
+layout(location=3) in vec3 aColor;    // 정점 색 버퍼
+
+uniform float uTime;                  // 초 단위 시간 — 모든 정점이 같은 값을 받는다
+
+out vec3 vColor;                      // 프래그먼트 셰이더로 넘길 값
+out vec3 vNormal;
+
+void main() {
+  vColor  = aColor;
+  vNormal = aNormal;
+
+  // gl_Position 에 넣는 값이 그 정점의 최종 위치(NDC)입니다.
+  // 지금은 아무 변환도 하지 않으므로 정점 좌표가 그대로 화면 좌표가 됩니다.
+  gl_Position = vec4(aPos, 1.0);
+}
+`;
+
+/* ══════════════════════════════════════════════════════════════════════════
+   3. 프래그먼트 셰이더 — 픽셀 하나마다 한 번씩 실행됩니다
+   ══════════════════════════════════════════════════════════════════════════ */
+const FS_SOURCE = `#version 300 es
+precision highp float;                // 실수 정밀도 선언 — 여기서는 필수입니다
+
+in vec3 vColor;                       // 버텍스 셰이더가 보낸 값이 "보간되어" 들어온다
+in vec3 vNormal;
+
+uniform float uTime;
+
+out vec4 fragColor;                   // 이 픽셀의 최종 색
+
+void main() {
+  fragColor = vec4(vColor, 1.0);
+}
+`;
+
+/* ══════════════════════════════════════════════════════════════════════════
+   4. WebGL 준비
+   ══════════════════════════════════════════════════════════════════════════ */
+const canvas = document.getElementById('glcanvas');
+const gl = canvas.getContext('webgl2');
+if (!gl) {
+  document.body.innerHTML =
+    '<p style="color:#fff;font:16px sans-serif;padding:2rem">' +
+    'WebGL2 를 사용할 수 없습니다. 최신 Chrome 또는 Edge 로 열어 주세요.</p>';
+  throw new Error('no webgl2');
+}
+
+// 셰이더 문자열을 컴파일한다. 실패하면 오류에 "몇 줄"인지 나온다.
+function compileShader(type, source) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, source);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    const kind = (type === gl.VERTEX_SHADER) ? '버텍스' : '프래그먼트';
+    throw new Error(kind + ' 셰이더 오류\n' + gl.getShaderInfoLog(s));
+  }
+  return s;
+}
+
+// 두 셰이더를 하나의 "프로그램" 으로 묶는다.
+function createProgram(vsSource, fsSource) {
+  const p = gl.createProgram();
+  gl.attachShader(p, compileShader(gl.VERTEX_SHADER, vsSource));
+  gl.attachShader(p, compileShader(gl.FRAGMENT_SHADER, fsSource));
+  gl.linkProgram(p);
+  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+    throw new Error('링크 오류\n' + gl.getProgramInfoLog(p));
+  }
+  return p;
+}
+
+const program = createProgram(VS_SOURCE, FS_SOURCE);
+
+// uniform 의 "위치"를 이름으로 찾아 둔다. 매 프레임 찾으면 느리다.
+const uTimeLoc = gl.getUniformLocation(program, 'uTime');
+
+/* ══════════════════════════════════════════════════════════════════════════
+   5. 버퍼를 만들어 GPU 메모리로 보낸다
+   ──────────────────────────────────────────────────────────────────────────
+   VAO(Vertex Array Object) 는 "어떤 버퍼를 몇 번 자리에 어떻게 읽을지"를
+   한 묶음으로 기억해 두는 것입니다. 그려야 할 때 이것만 bind 하면 됩니다.
+   ══════════════════════════════════════════════════════════════════════════ */
+function createMesh(mesh) {
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+
+  function attribute(data, location, size) {
+    if (!data) return;
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);   // ← CPU 에서 GPU 로 복사
+    gl.enableVertexAttribArray(location);
+    gl.vertexAttribPointer(location, size, gl.FLOAT, false, 0, 0);
+  }
+  attribute(mesh.positions, 0, 3);   // location 0 ← aPos
+  attribute(mesh.normals,   1, 3);   // location 1 ← aNormal
+  attribute(mesh.colors,    3, 3);   // location 3 ← aColor
+
+  const ibo = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.indices, gl.STATIC_DRAW);
+
+  gl.bindVertexArray(null);
+  return { vao: vao, count: mesh.indices.length };
+}
+
+const triangle = createMesh({ positions, normals, colors, indices });
+
+/* ══════════════════════════════════════════════════════════════════════════
+   6. 매 프레임 그린다
+   ══════════════════════════════════════════════════════════════════════════ */
+const startTime = performance.now();
+
+function render() {
+  // 캔버스 크기를 화면에 맞춘다 (고해상도 화면 대응)
+  const dpr = window.devicePixelRatio || 1;
+  const w = Math.floor(canvas.clientWidth * dpr);
+  const h = Math.floor(canvas.clientHeight * dpr);
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+  gl.viewport(0, 0, canvas.width, canvas.height);
+
+  // 화면을 지운다
+  gl.clearColor(0.04, 0.06, 0.10, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  const time = (performance.now() - startTime) / 1000;
+
+  gl.useProgram(program);                 // ← uniform 을 넣기 전에 반드시 먼저!
+  gl.uniform1f(uTimeLoc, time);
+
+  gl.bindVertexArray(triangle.vao);
+  gl.drawElements(gl.TRIANGLES, triangle.count, gl.UNSIGNED_SHORT, 0);
+  gl.bindVertexArray(null);
+
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
